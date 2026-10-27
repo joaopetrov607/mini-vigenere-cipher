@@ -21,3 +21,10 @@ The alphabet is the 26 uppercase ASCII letters A–Z. Input text is uppercased b
 ## Awkward edge you will hit
 
 Because non-letters do not consume key letters, the same keyword produces different ciphertext depending on where spaces sit. If you encipher `"HELLO WORLD"` and `"HELLOWORLD"` with the same key, the `WORLD` portions will differ. This is the standard textbook behaviour, but it surprises anyone expecting positional alignment to the raw byte stream.
+
+## Design notes
+
+The window stores values eagerly rather than keeping running aggregates. Running
+sums drift with floating point over long streams, and recomputing from a small
+buffer is cheap enough that the drift is not worth the speed.
+
